@@ -75,14 +75,54 @@ foreach($links as $link){
             $html = new simple_html_dom();
             $html->load($item["tbody"]["text"]);
 //            var_dump($item["tbody"]["text"]);
-            foreach($html->find('tr[id] td[class=descr_good] a') as $element) {
-                echo $element->href;
-                exit;
+
+            //Наименование
+            $arrayForAElements = [];
+            foreach($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
+                $arrayForAElements[] = $element->innertext;
             }
+            //Артикул
+            $arrayForArticleElements = [];
+            foreach($html->find('tr[id]') as $key => $tr) {
+                $htmlTd = new simple_html_dom();
+                $htmlTd->load($tr);
+                foreach($htmlTd->find('td') as $index => $td) {
+                    if($index == '2')
+                        $arrayForArticleElements[] = $td->innertext;
+                }
+            }
+            //Количество(Запас)
+            $arrayForCountElements = [];
+            foreach($html->find('tr[id]') as $key => $tr) {
+                $htmlTd = new simple_html_dom();
+                $htmlTd->load($tr);
+                foreach($htmlTd->find('td') as $index => $td) {
+                    if($index == '3') {
+                        $htmlDiv = new simple_html_dom();
+                        $htmlDiv->load($td);
+                        foreach($htmlDiv->find('div') as $indexDiv => $div) {
+                            if ($indexDiv == '1') {
+                                $arrayForCountElements[] = (string) (int) $div->innertext;
+                            }
+                        }
+                    }
+
+                }
+            }
+            //Цена
+            $arrayForPriceElements = [];
+            foreach($html->find('td[class=opt_sale_box] div') as $key => $td) {
+                $arrayForPriceElements[] = (string) (int) trim($td->innertext);
+            }
+
+            var_dump($arrayForPriceElements);
+            exit;
+
+//            $arraItem[] = $arrayForAElement;
         }
     }
 
-
+//    var_dump($arraItem);
     exit;
 }
 curl_close($curl);
