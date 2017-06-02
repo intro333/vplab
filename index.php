@@ -7,6 +7,7 @@ include_once("./library/simplehtmldom_1_5/simple_html_dom.php");
 $url = 'http://sportexpress.org';
 $login = 'ceo@fitmepro.ru';
 $passwd = 'Fitme321';
+$countForCounts = isset($argv[1]) ? $argv[1] : 0;
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $url . '/login.php');
@@ -103,16 +104,19 @@ foreach($links as $linkKey => $link){
                         if ($index == '3') {
                             $htmlDiv = new simple_html_dom();
                             $htmlDiv->load($td);
-                            foreach ($htmlDiv->find('div') as $indexDiv => $div) {
-                                if ($indexDiv == '0') {
-                                    $arrayForCountElements[] = preg_replace("/[^0-9]/", '', $div->innertext);
+                            if ($htmlDiv->find('div')) {
+                                foreach ($htmlDiv->find('div') as $indexDiv => $div) {
+                                    if ($indexDiv == '0') {
+                                        $arrayForCountElements[] = preg_replace("/[^0-9]/", '', $div->innertext);
+                                    }
+                                    if ($indexDiv == '1') {
+                                        $arrayForCountElements[count($arrayForCountElements) - 1] = preg_replace("/[^0-9]/", '', $div->innertext);
+                                    }
                                 }
-                                if ($indexDiv == '1') {
-                                    $arrayForCountElements[count($arrayForCountElements) - 1] = preg_replace("/[^0-9]/", '', $div->innertext);
-                                }
+                            } else {
+                                $arrayForCountElements[] = 'Нет данных';
                             }
                         }
-
                     }
                 }
                 //Цена
@@ -123,35 +127,34 @@ foreach($links as $linkKey => $link){
 
                 //Структурируем данные для Excel
                 foreach ($arrayForDescriptionElements as $key => $item) {
-                    $AllData[] = [
-                        'description' => $item,
-                        'article' => array_key_exists($key, $arrayForArticleElements) ? $arrayForArticleElements[$key] : 'Нет данных',
-                        'count' => array_key_exists($key, $arrayForCountElements) ? $arrayForCountElements[$key] : 'Нет данных',
-                        'price' => array_key_exists($key, $arrayForPriceElements) ? $arrayForPriceElements[$key] : 'Нет данных'
-                    ];
+                    if(array_key_exists($key, $arrayForCountElements)) {
+                        if ($arrayForCountElements[$key] >= $countForCounts) {
+                            $AllData[] = [
+                                'description' => $item,
+                                'article' => array_key_exists($key, $arrayForArticleElements) ? $arrayForArticleElements[$key] : 'Нет данных',
+                                'count' => array_key_exists($key, $arrayForCountElements) ? $arrayForCountElements[$key] : 'Нет данных',
+                                'price' => array_key_exists($key, $arrayForPriceElements) ? $arrayForPriceElements[$key] : 'Нет данных'
+                            ];
+                        }
+                    } else {
+                        $AllData[] = [
+                            'description' => $item,
+                            'article' => array_key_exists($key, $arrayForArticleElements) ? $arrayForArticleElements[$key] : 'Нет данных',
+                            'count' => array_key_exists($key, $arrayForCountElements) ? $arrayForCountElements[$key] : 'Нет данных',
+                            'price' => array_key_exists($key, $arrayForPriceElements) ? $arrayForPriceElements[$key] : 'Нет данных'
+                        ];
+                    }
                 }
             }
         }
     }
 }
-//$AllData[] = [
-//    'description' => "UN Animal Nitro 30",
-//    'article'     => "U3036",
-//    'count'       => "0",
-//    'price'       => "1978"
-//];
-//$AllData[] = [
-//    'description' => "UN Animal Pac 31",
-//    'article'     => "U3234537",
-//    'count'       => "100",
-//    'price'       => "2500"
-//];
-/** Include PHPExcel */
+
+//Сохранение в excel
 require_once './library/PHPExcel-1.8.1/Classes/PHPExcel.php';
 
 $objPHPExcel = new PHPExcel();
 $objPHPExcel->setActiveSheetIndex(0);
-
 $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Description');
 $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Article');
 $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Count');
@@ -166,6 +169,9 @@ foreach ($AllData as $key => $item) {
 
 $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
 $objWriter->save('vplab.xlsx');
+
+//Отправка письма
+//mail("intro333@ya.ru", "VPLAB", "Line 1\nLine 2\nLine 3");
 
 //var_dump($AllData);
 curl_close($curl);
