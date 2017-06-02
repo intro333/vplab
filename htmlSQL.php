@@ -59,8 +59,9 @@ foreach($links as $link){
         print "Query error: " . $wsql->error;
         exit;
     }
-    $arraItem = [];
-    foreach($wsql->fetch_objects() as $obj){
+
+    $AllData = [];
+    foreach($wsql->fetch_objects() as $keyObg => $obj) {
         if($obj->id) {
             $sub_wsql = new htmlsql();
             $sub_wsql->connect('string', $obj->text);
@@ -74,12 +75,11 @@ foreach($links as $link){
             $item = $sub_wsql->fetch_array();
             $html = new simple_html_dom();
             $html->load($item["tbody"]["text"]);
-//            var_dump($item["tbody"]["text"]);
 
             //Наименование
             $arrayForAElements = [];
             foreach($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
-                $arrayForAElements[] = $element->innertext;
+                $arrayForAElements[] = preg_replace("/ {2,}/"," ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or'), '', $element->innertext));
             }
             //Артикул
             $arrayForArticleElements = [];
@@ -114,15 +114,16 @@ foreach($links as $link){
             foreach($html->find('td[class=opt_sale_box] div') as $key => $td) {
                 $arrayForPriceElements[] = (string) (int) trim($td->innertext);
             }
-
-            var_dump($arrayForPriceElements);
-            exit;
-
-//            $arraItem[] = $arrayForAElement;
+            $AllData[] = [
+                $arrayForAElements,
+                $arrayForArticleElements,
+                $arrayForCountElements,
+                $arrayForPriceElements
+            ];
         }
     }
 
-//    var_dump($arraItem);
+    var_dump($AllData);
     exit;
 }
 curl_close($curl);
