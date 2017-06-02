@@ -1,5 +1,9 @@
 <?php
 
+include_once("./library/htmlSQL/snoopy.class.php");
+include_once("./library/htmlSQL/htmlsql.class.php");
+include_once("./library/simplehtmldom_1_5/simple_html_dom.php");
+
 $url = 'http://sportexpress.org';
 $login = 'ceo@fitmepro.ru';
 $passwd = 'Fitme321';
@@ -13,6 +17,7 @@ curl_setopt($curl, CURLOPT_FAILONERROR, 1);
 curl_setopt($curl, CURLOPT_REFERER, $url . '/');
 curl_setopt($curl, CURLOPT_TIMEOUT, 3);
 curl_setopt($curl, CURLOPT_POST, 1);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_POSTFIELDS, $url . '/login.php?posted2=true&login=' . $login . '&password=' . $passwd . '&submit=1&formid=authfotm2');
 curl_setopt($curl, CURLOPT_HEADER, 1);
 curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -21,23 +26,112 @@ curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 
 $result = curl_exec($curl);
 
-curl_setopt($curl, CURLOPT_URL, 'http://sportexpress.org/shop.php?op=price');
-$animal = curl_exec($curl);
+curl_setopt($curl, CURLOPT_URL, $url . '/shop.php?op=price');
+$allLinks = curl_exec($curl);
 
-//curl_close($curl);
-include('library/simplehtmldom_1_5/simple_html_dom.php');
+//HTMLSQL
+$wsql = new htmlsql();
+if (!$wsql->connect('string', $allLinks)){
+    print 'Error while connecting: ' . $wsql->error;
+    exit;
+}
+//Получаем все ссылки брендов
+if (!$wsql->query('SELECT href FROM a WHERE $class == "ancLinks2"')){
+    print "Query error: " . $wsql->error;
+    exit;
+}
+//file_put_contents('1.txt', $animal);
+$links = [];
+foreach($wsql->fetch_array() as $row){
+    $links[] = $row['href'];
+}
 
-// Create a DOM object
-//$dom = new simple_html_dom();
-//echo "Список производителей от simple HTML DOM.\n";
-//$dom->load($animal);
+foreach($links as $link){
+    curl_setopt($curl, CURLOPT_URL, $url . $link);
+    $animal = curl_exec($curl);
+    //Формируем table
+    $wsql = new htmlsql();
+    if (!$wsql->connect('string', $animal)){
+        print 'Error while connecting: ' . $wsql->error;
+        exit;
+    }
+    if (!$wsql->query('SELECT id, text FROM table')){
+        print "Query error: " . $wsql->error;
+        exit;
+    }
 
+    $AllData = [];
+    foreach($wsql->fetch_objects() as $keyObg => $obj) {
+        if($obj->id) {
+            $sub_wsql = new htmlsql();
+            $sub_wsql->connect('string', $obj->text);
 
-$html = file_get_html('http://sportexpress.org/');
+            if (!$sub_wsql->query('SELECT * FROM *')){
+                print "Query error: " . $wsql->error;
+                exit;
+            }
 
-$articles = $html->find('div[id=header]', 0);
+            $sub_wsql->convert_tagname_to_key();
+            $item = $sub_wsql->fetch_array();
+            $html = new simple_html_dom();
+            $html->load($item["tbody"]["text"]);
 
-print_r($articles);
-?>
+            //Наименование
+            $arrayForDescriptionElements = [];
+            foreach($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
+                $arrayForDescriptionElements[] = preg_replace("/ {2,}/"," ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or'), '', $element->innertext));
+            }
+            //Артикул
+            $arrayForArticleElements = [];
+            foreach($html->find('tr[id]') as $key => $tr) {
+                $htmlTd = new simple_html_dom();
+                $htmlTd->load($tr);
+                foreach($htmlTd->find('td') as $index => $td) {
+                    if($index == '2')
+                        $arrayForArticleElements[] = $td->innertext;
+                }
+            }
+            //Количество(Запас)
+            $arrayForCountElements = [];
+            foreach($html->find('tr[id]') as $key => $tr) {
+                $htmlTd = new simple_html_dom();
+                $htmlTd->load($tr);
+                foreach($htmlTd->find('td') as $index => $td) {
+                    if($index == '3') {
+                        $htmlDiv = new simple_html_dom();
+                        $htmlDiv->load($td);
+                        foreach($htmlDiv->find('div') as $indexDiv => $div) {
+                            if ($indexDiv == '0') {
+                                $arrayForCountElements[] = preg_replace("/[^0-9]/", '', $div->innertext);
+                            }
+                            if ($indexDiv == '1') {
+                                $arrayForCountElements[count($arrayForCountElements) - 1] = preg_replace("/[^0-9]/", '', $div->innertext);
+                            }
+                        }
+                    }
 
+                }
+            }
+            //Цена
+            $arrayForPriceElements = [];
+            foreach($html->find('td[class=opt_sale_box] div') as $key => $td) {
+                $arrayForPriceElements[] = (string) (int) trim($td->innertext);
+            }
+
+            //Структурируем данные для Excel
+            foreach ($arrayForDescriptionElements as $key => $item) {
+                $AllData[] = [
+                    'description' => $item,
+                    'article'     => array_key_exists($key, $arrayForArticleElements) ? $arrayForArticleElements[$key] : 'Нет данных',
+                    'count'     => array_key_exists($key, $arrayForCountElements) ? $arrayForCountElements[$key] : 'Нет данных',
+                    'price'     => array_key_exists($key, $arrayForPriceElements) ? $arrayForPriceElements[$key] : 'Нет данных'
+                ];
+            }
+        }
+    }
+
+    var_dump($AllData);
+    exit;
+}
+curl_close($curl);
 ?>

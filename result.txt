@@ -1,0 +1,629 @@
+array(57) {
+  [0]=>
+  array(4) {
+    ["description"]=>
+    string(18) "UN Animal Nitro 30"
+    ["article"]=>
+    string(5) "U3036"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "1978"
+  }
+  [1]=>
+  array(4) {
+    ["description"]=>
+    string(18) "UN Animal Nitro 44"
+    ["article"]=>
+    string(5) "U3035"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2713"
+  }
+  [2]=>
+  array(4) {
+    ["description"]=>
+    string(16) "UN Animal Pak 15"
+    ["article"]=>
+    string(5) "U3012"
+    ["count"]=>
+    string(3) "300"
+    ["price"]=>
+    string(3) "994"
+  }
+  [3]=>
+  array(4) {
+    ["description"]=>
+    string(16) "UN Animal Pak 44"
+    ["article"]=>
+    string(5) "U3011"
+    ["count"]=>
+    string(3) "500"
+    ["price"]=>
+    string(4) "2036"
+  }
+  [4]=>
+  array(4) {
+    ["description"]=>
+    string(31) "UN Animal Pak Powder ange 388г"
+    ["article"]=>
+    string(5) "U3221"
+    ["count"]=>
+    string(19) "Нет данных"
+    ["price"]=>
+    string(4) "1937"
+  }
+  [5]=>
+  array(4) {
+    ["description"]=>
+    string(15) "UN Animal Omega"
+    ["article"]=>
+    string(5) "U3058"
+    ["count"]=>
+    string(2) "99"
+    ["price"]=>
+    string(4) "1771"
+  }
+  [6]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Mass 2300г"
+    ["article"]=>
+    string(5) "U3180"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2660"
+  }
+  [7]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Mass 2300г"
+    ["article"]=>
+    string(5) "U3181"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2660"
+  }
+  [8]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Mass 2300г"
+    ["article"]=>
+    string(5) "U3182"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2660"
+  }
+  [9]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Mass 4600г"
+    ["article"]=>
+    string(5) "U3184"
+    ["count"]=>
+    string(1) "1"
+    ["price"]=>
+    string(4) "4776"
+  }
+  [10]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Mass 4600г"
+    ["article"]=>
+    string(5) "U3185"
+    ["count"]=>
+    string(1) "4"
+    ["price"]=>
+    string(4) "4776"
+  }
+  [11]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Mass 4600г"
+    ["article"]=>
+    string(5) "U3186"
+    ["count"]=>
+    string(1) "5"
+    ["price"]=>
+    string(4) "4776"
+  }
+  [12]=>
+  array(4) {
+    ["description"]=>
+    string(14) "UN Animal Cuts"
+    ["article"]=>
+    string(5) "U3014"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(4) "2382"
+  }
+  [13]=>
+  array(4) {
+    ["description"]=>
+    string(16) "UN Animal M-Stak"
+    ["article"]=>
+    string(5) "U3028"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2341"
+  }
+  [14]=>
+  array(4) {
+    ["description"]=>
+    string(14) "UN Animal Test"
+    ["article"]=>
+    string(5) "U3032"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "4360"
+  }
+  [15]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Whey 1800г"
+    ["article"]=>
+    string(5) "U3108"
+    ["count"]=>
+    string(2) "90"
+    ["price"]=>
+    string(4) "3546"
+  }
+  [16]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Whey 1800г"
+    ["article"]=>
+    string(5) "U3116"
+    ["count"]=>
+    string(2) "43"
+    ["price"]=>
+    string(4) "3546"
+  }
+  [17]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Whey 1800г"
+    ["article"]=>
+    string(5) "U3134"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "3546"
+  }
+  [18]=>
+  array(4) {
+    ["description"]=>
+    string(20) "UN Animal Whey 908г"
+    ["article"]=>
+    string(5) "U3107"
+    ["count"]=>
+    string(2) "57"
+    ["price"]=>
+    string(4) "1975"
+  }
+  [19]=>
+  array(4) {
+    ["description"]=>
+    string(20) "UN Animal Whey 908г"
+    ["article"]=>
+    string(5) "U3115"
+    ["count"]=>
+    string(2) "48"
+    ["price"]=>
+    string(4) "1975"
+  }
+  [20]=>
+  array(4) {
+    ["description"]=>
+    string(20) "UN Animal Whey 908г"
+    ["article"]=>
+    string(5) "U3133"
+    ["count"]=>
+    string(1) "2"
+    ["price"]=>
+    string(4) "1975"
+  }
+  [21]=>
+  array(4) {
+    ["description"]=>
+    string(12) "UN Animal PM"
+    ["article"]=>
+    string(5) "U3055"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "1968"
+  }
+  [22]=>
+  array(4) {
+    ["description"]=>
+    string(14) "UN Animal Stak"
+    ["article"]=>
+    string(5) "U3023"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2342"
+  }
+  [23]=>
+  array(4) {
+    ["description"]=>
+    string(14) "UN Animal Pump"
+    ["article"]=>
+    string(5) "U3054"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2486"
+  }
+  [24]=>
+  array(4) {
+    ["description"]=>
+    string(20) "UN Animal Rage 333г"
+    ["article"]=>
+    string(5) "U3075"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2288"
+  }
+  [25]=>
+  array(4) {
+    ["description"]=>
+    string(20) "UN Animal Rage 333г"
+    ["article"]=>
+    string(5) "U3080"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2288"
+  }
+  [26]=>
+  array(4) {
+    ["description"]=>
+    string(20) "UN Animal Rage 333г"
+    ["article"]=>
+    string(5) "U3082"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2288"
+  }
+  [27]=>
+  array(4) {
+    ["description"]=>
+    string(17) "UN Animal Rage 44"
+    ["article"]=>
+    string(5) "U3076"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "2666"
+  }
+  [28]=>
+  array(4) {
+    ["description"]=>
+    string(17) "UN Animal Rage XL"
+    ["article"]=>
+    string(5) "U3101"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "1571"
+  }
+  [29]=>
+  array(4) {
+    ["description"]=>
+    string(17) "UN Animal Rage XL"
+    ["article"]=>
+    string(5) "U3102"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "1571"
+  }
+  [30]=>
+  array(4) {
+    ["description"]=>
+    string(17) "UN Animal Rage XL"
+    ["article"]=>
+    string(5) "U3103"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "1571"
+  }
+  [31]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка желтая"
+    ["article"]=>
+    string(5) "U8232"
+    ["count"]=>
+    string(2) "50"
+    ["price"]=>
+    string(3) "511"
+  }
+  [32]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка желтая"
+    ["article"]=>
+    string(5) "U8233"
+    ["count"]=>
+    string(1) "4"
+    ["price"]=>
+    string(3) "511"
+  }
+  [33]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка желтая"
+    ["article"]=>
+    string(5) "U8234"
+    ["count"]=>
+    string(2) "26"
+    ["price"]=>
+    string(3) "511"
+  }
+  [34]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка желтая"
+    ["article"]=>
+    string(5) "U8235"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(3) "511"
+  }
+  [35]=>
+  array(4) {
+    ["description"]=>
+    string(41) "UN ANIMAL Футболка красная"
+    ["article"]=>
+    string(5) "U8236"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "511"
+  }
+  [36]=>
+  array(4) {
+    ["description"]=>
+    string(41) "UN ANIMAL Футболка красная"
+    ["article"]=>
+    string(5) "U8237"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "511"
+  }
+  [37]=>
+  array(4) {
+    ["description"]=>
+    string(41) "UN ANIMAL Футболка красная"
+    ["article"]=>
+    string(5) "U8238"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "511"
+  }
+  [38]=>
+  array(4) {
+    ["description"]=>
+    string(41) "UN ANIMAL Футболка красная"
+    ["article"]=>
+    string(5) "U8239"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "511"
+  }
+  [39]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка черная"
+    ["article"]=>
+    string(5) "U8027"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "511"
+  }
+  [40]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка черная"
+    ["article"]=>
+    string(5) "U8028"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "511"
+  }
+  [41]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка черная"
+    ["article"]=>
+    string(5) "U8029"
+    ["count"]=>
+    string(2) "32"
+    ["price"]=>
+    string(3) "511"
+  }
+  [42]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN ANIMAL Футболка черная"
+    ["article"]=>
+    string(5) "U8030"
+    ["count"]=>
+    string(2) "31"
+    ["price"]=>
+    string(3) "511"
+  }
+  [43]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN Animal Футболка черная"
+    ["article"]=>
+    string(5) "U8009"
+    ["count"]=>
+    string(1) "1"
+    ["price"]=>
+    string(3) "511"
+  }
+  [44]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN Animal Футболка черная"
+    ["article"]=>
+    string(5) "U8010"
+    ["count"]=>
+    string(2) "59"
+    ["price"]=>
+    string(3) "511"
+  }
+  [45]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN Animal Футболка черная"
+    ["article"]=>
+    string(5) "U8012"
+    ["count"]=>
+    string(2) "34"
+    ["price"]=>
+    string(3) "511"
+  }
+  [46]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN Animal Футболка черная"
+    ["article"]=>
+    string(5) "U8013"
+    ["count"]=>
+    string(2) "23"
+    ["price"]=>
+    string(3) "511"
+  }
+  [47]=>
+  array(4) {
+    ["description"]=>
+    string(39) "UN Animal Футболка черная"
+    ["article"]=>
+    string(5) "U8014"
+    ["count"]=>
+    string(2) "33"
+    ["price"]=>
+    string(3) "511"
+  }
+  [48]=>
+  array(4) {
+    ["description"]=>
+    string(28) "UN Animal бейсболка"
+    ["article"]=>
+    string(3) "UB1"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(4) "1303"
+  }
+  [49]=>
+  array(4) {
+    ["description"]=>
+    string(56) "UN Animal шапка трикотажная черная"
+    ["article"]=>
+    string(5) "U5064"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(4) "1303"
+  }
+  [50]=>
+  array(4) {
+    ["description"]=>
+    string(34) "UN Animal Flex 44 пакетика"
+    ["article"]=>
+    string(5) "U3052"
+    ["count"]=>
+    string(3) "500"
+    ["price"]=>
+    string(4) "1912"
+  }
+  [51]=>
+  array(4) {
+    ["description"]=>
+    string(33) "UN Animal Shaker Black/Silver Lid"
+    ["article"]=>
+    string(5) "U5089"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(3) "311"
+  }
+  [52]=>
+  array(4) {
+    ["description"]=>
+    string(23) "UN Animal Water bottles"
+    ["article"]=>
+    string(5) "U5088"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "311"
+  }
+  [53]=>
+  array(4) {
+    ["description"]=>
+    string(35) "UN Animal Шейкер черный"
+    ["article"]=>
+    string(5) "U0851"
+    ["count"]=>
+    string(1) "0"
+    ["price"]=>
+    string(3) "311"
+  }
+  [54]=>
+  array(4) {
+    ["description"]=>
+    string(24) "UN Animal Lifting Straps"
+    ["article"]=>
+    string(5) "U5065"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(3) "976"
+  }
+  [55]=>
+  array(4) {
+    ["description"]=>
+    string(28) "UN Animal PRO Lifting Straps"
+    ["article"]=>
+    string(5) "U5087"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(4) "1630"
+  }
+  [56]=>
+  array(4) {
+    ["description"]=>
+    string(21) "UN Animal Wrist Wraps"
+    ["article"]=>
+    string(5) "U8308"
+    ["count"]=>
+    string(3) "100"
+    ["price"]=>
+    string(4) "1194"
+  }
+}
