@@ -46,12 +46,16 @@ foreach($wsql->fetch_array() as $row){
     $links[] = $row['href'];
 }
 
-foreach($links as $link){
+$AllData = [];
+
+foreach($links as $linkKey => $link){
+//    var_dump($linkKey);
+//    exit;
     curl_setopt($curl, CURLOPT_URL, $url . $link);
-    $animal = curl_exec($curl);
+    $ItemLinks = curl_exec($curl);
     //Формируем table
     $wsql = new htmlsql();
-    if (!$wsql->connect('string', $animal)){
+    if (!$wsql->connect('string', $ItemLinks)){
         print 'Error while connecting: ' . $wsql->error;
         exit;
     }
@@ -59,79 +63,77 @@ foreach($links as $link){
         print "Query error: " . $wsql->error;
         exit;
     }
+    if ($link !== '/shop.php?op=price&vid=200') {
+        foreach($wsql->fetch_objects() as $keyObg => $obj) {
+            if ($obj->id) {
+                $sub_wsql = new htmlsql();
+                $sub_wsql->connect('string', $obj->text);
 
-    $AllData = [];
-    foreach($wsql->fetch_objects() as $keyObg => $obj) {
-        if($obj->id) {
-            $sub_wsql = new htmlsql();
-            $sub_wsql->connect('string', $obj->text);
-
-            if (!$sub_wsql->query('SELECT * FROM *')){
-                print "Query error: " . $wsql->error;
-                exit;
-            }
-
-            $sub_wsql->convert_tagname_to_key();
-            $item = $sub_wsql->fetch_array();
-            $html = new simple_html_dom();
-            $html->load($item["tbody"]["text"]);
-
-            //Наименование
-            $arrayForDescriptionElements = [];
-            foreach($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
-                $arrayForDescriptionElements[] = preg_replace("/ {2,}/"," ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or'), '', $element->innertext));
-            }
-            //Артикул
-            $arrayForArticleElements = [];
-            foreach($html->find('tr[id]') as $key => $tr) {
-                $htmlTd = new simple_html_dom();
-                $htmlTd->load($tr);
-                foreach($htmlTd->find('td') as $index => $td) {
-                    if($index == '2')
-                        $arrayForArticleElements[] = $td->innertext;
+                if (!$sub_wsql->query('SELECT * FROM *')) {
+                    print "Query error: " . $wsql->error;
+                    exit;
                 }
-            }
-            //Количество(Запас)
-            $arrayForCountElements = [];
-            foreach($html->find('tr[id]') as $key => $tr) {
-                $htmlTd = new simple_html_dom();
-                $htmlTd->load($tr);
-                foreach($htmlTd->find('td') as $index => $td) {
-                    if($index == '3') {
-                        $htmlDiv = new simple_html_dom();
-                        $htmlDiv->load($td);
-                        foreach($htmlDiv->find('div') as $indexDiv => $div) {
-                            if ($indexDiv == '0') {
-                                $arrayForCountElements[] = preg_replace("/[^0-9]/", '', $div->innertext);
-                            }
-                            if ($indexDiv == '1') {
-                                $arrayForCountElements[count($arrayForCountElements) - 1] = preg_replace("/[^0-9]/", '', $div->innertext);
+
+                $sub_wsql->convert_tagname_to_key();
+                $item = $sub_wsql->fetch_array();
+                $html = new simple_html_dom();
+                $html->load($item["tbody"]["text"]);
+
+                //Наименование
+                $arrayForDescriptionElements = [];
+                foreach ($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
+                    $arrayForDescriptionElements[] = preg_replace("/ {2,}/", " ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or'), '', $element->innertext));
+                }
+                //Артикул
+                $arrayForArticleElements = [];
+                foreach ($html->find('tr[id]') as $key => $tr) {
+                    $htmlTd = new simple_html_dom();
+                    $htmlTd->load($tr);
+                    foreach ($htmlTd->find('td') as $index => $td) {
+                        if ($index == '2')
+                            $arrayForArticleElements[] = $td->innertext;
+                    }
+                }
+                //Количество(Запас)
+                $arrayForCountElements = [];
+                foreach ($html->find('tr[id]') as $key => $tr) {
+                    $htmlTd = new simple_html_dom();
+                    $htmlTd->load($tr);
+                    foreach ($htmlTd->find('td') as $index => $td) {
+                        if ($index == '3') {
+                            $htmlDiv = new simple_html_dom();
+                            $htmlDiv->load($td);
+                            foreach ($htmlDiv->find('div') as $indexDiv => $div) {
+                                if ($indexDiv == '0') {
+                                    $arrayForCountElements[] = preg_replace("/[^0-9]/", '', $div->innertext);
+                                }
+                                if ($indexDiv == '1') {
+                                    $arrayForCountElements[count($arrayForCountElements) - 1] = preg_replace("/[^0-9]/", '', $div->innertext);
+                                }
                             }
                         }
+
                     }
-
                 }
-            }
-            //Цена
-            $arrayForPriceElements = [];
-            foreach($html->find('td[class=opt_sale_box] div') as $key => $td) {
-                $arrayForPriceElements[] = (string) (int) trim($td->innertext);
-            }
+                //Цена
+                $arrayForPriceElements = [];
+                foreach ($html->find('tr[id] td[class=opt_sale_box] div') as $key => $td) {
+                    $arrayForPriceElements[] = preg_replace("/[^0-9]/", '', trim($td->innertext));
+                }
 
-            //Структурируем данные для Excel
-            foreach ($arrayForDescriptionElements as $key => $item) {
-                $AllData[] = [
-                    'description' => $item,
-                    'article'     => array_key_exists($key, $arrayForArticleElements) ? $arrayForArticleElements[$key] : 'Нет данных',
-                    'count'     => array_key_exists($key, $arrayForCountElements) ? $arrayForCountElements[$key] : 'Нет данных',
-                    'price'     => array_key_exists($key, $arrayForPriceElements) ? $arrayForPriceElements[$key] : 'Нет данных'
-                ];
+                //Структурируем данные для Excel
+                foreach ($arrayForDescriptionElements as $key => $item) {
+                    $AllData[] = [
+                        'description' => $item,
+                        'article' => array_key_exists($key, $arrayForArticleElements) ? $arrayForArticleElements[$key] : 'Нет данных',
+                        'count' => array_key_exists($key, $arrayForCountElements) ? $arrayForCountElements[$key] : 'Нет данных',
+                        'price' => array_key_exists($key, $arrayForPriceElements) ? $arrayForPriceElements[$key] : 'Нет данных'
+                    ];
+                }
             }
         }
     }
-
-    var_dump($AllData);
-    exit;
 }
+var_dump($AllData);
 curl_close($curl);
 ?>
