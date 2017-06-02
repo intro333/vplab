@@ -82,7 +82,7 @@ foreach($links as $linkKey => $link){
                 //Наименование
                 $arrayForDescriptionElements = [];
                 foreach ($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
-                    $arrayForDescriptionElements[] = preg_replace("/ {2,}/", " ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or'), '', $element->innertext));
+                    $arrayForDescriptionElements[] = preg_replace("/ {2,}/", " ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or', '&amp;'), '', $element->innertext));
                 }
                 //Артикул
                 $arrayForArticleElements = [];
@@ -134,6 +134,39 @@ foreach($links as $linkKey => $link){
         }
     }
 }
-var_dump($AllData);
+//$AllData[] = [
+//    'description' => "UN Animal Nitro 30",
+//    'article'     => "U3036",
+//    'count'       => "0",
+//    'price'       => "1978"
+//];
+//$AllData[] = [
+//    'description' => "UN Animal Pac 31",
+//    'article'     => "U3234537",
+//    'count'       => "100",
+//    'price'       => "2500"
+//];
+/** Include PHPExcel */
+require_once './library/PHPExcel-1.8.1/Classes/PHPExcel.php';
+
+$objPHPExcel = new PHPExcel();
+$objPHPExcel->setActiveSheetIndex(0);
+
+$objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Description');
+$objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Article');
+$objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Count');
+$objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Price');
+
+foreach ($AllData as $key => $item) {
+    $objPHPExcel->getActiveSheet()->SetCellValue('A'.($key+2), $item['description']);
+    $objPHPExcel->getActiveSheet()->SetCellValue('B'.($key+2), $item['article']);
+    $objPHPExcel->getActiveSheet()->SetCellValue('C'.($key+2), $item['count']);
+    $objPHPExcel->getActiveSheet()->SetCellValue('D'.($key+2), $item['price']);
+}
+
+$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+$objWriter->save('vplab.xlsx');
+
+//var_dump($AllData);
 curl_close($curl);
 ?>
