@@ -7,7 +7,7 @@ include_once("./library/simplehtmldom_1_5/simple_html_dom.php");
 $url = 'http://sportexpress.org';
 $login = 'ceo@fitmepro.ru';
 $passwd = 'Fitme321';
-$countForCounts = isset($argv[1]) ? $argv[1] : 0;
+$countForCounts = isset($_POST["counts"]) ? $_POST["counts"] : 0;
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $url . '/login.php');
@@ -55,36 +55,30 @@ foreach($links as $linkKey => $link){
     curl_setopt($curl, CURLOPT_URL, $url . $link);
     $ItemLinks = curl_exec($curl);
     //Формируем table
-    $wsql = new htmlsql();
-    if (!$wsql->connect('string', $ItemLinks)){
-        print 'Error while connecting: ' . $wsql->error;
+    $wsql2 = new htmlsql();
+    if (!$wsql2->connect('string', $ItemLinks)){
+        print 'Error while connecting: ' . $wsql2->error;
         exit;
     }
-    if (!$wsql->query('SELECT id, text FROM table')){
-        print "Query error: " . $wsql->error;
+    if (!$wsql2->query('SELECT id, text FROM table')){
+        print "Query error: " . $wsql2->error;
         exit;
     }
-    if ($link !== '/shop.php?op=price&vid=200') {
-        foreach($wsql->fetch_objects() as $keyObg => $obj) {
-            if ($obj->id) {
-                $sub_wsql = new htmlsql();
-                $sub_wsql->connect('string', $obj->text);
+//    if ($link !== '/shop.php?op=price&vid=200') {
+    if ($link == '/shop.php?op=price&vid=45') {
+        foreach($wsql2->fetch_array() as $obj) {
+            if ($obj['id']) {
 
-                if (!$sub_wsql->query('SELECT * FROM *')) {
-                    print "Query error: " . $wsql->error;
-                    exit;
-                }
-
-                $sub_wsql->convert_tagname_to_key();
-                $item = $sub_wsql->fetch_array();
                 $html = new simple_html_dom();
-                $html->load($item["tbody"]["text"]);
+                $html->load($obj['text']);
 
                 //Наименование
                 $arrayForDescriptionElements = [];
-                foreach ($html->find('tr[id] td[class=descr_good] a') as $key => $element) {
+                foreach ($html->find('tbody tr[id] td[class=descr_good] a') as $key => $element) {
                     $arrayForDescriptionElements[] = preg_replace("/ {2,}/", " ", str_replace(array('Go', '&quot;', 'Hard', 'Home', 'or', '&amp;'), '', $element->innertext));
                 }
+//                var_dump($arrayForDescriptionElements);
+//                exit;
                 //Артикул
                 $arrayForArticleElements = [];
                 foreach ($html->find('tr[id]') as $key => $tr) {
@@ -170,9 +164,45 @@ foreach ($AllData as $key => $item) {
 $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
 $objWriter->save('vplab.xlsx');
 
-//Отправка письма
-//mail("intro333@ya.ru", "VPLAB", "Line 1\nLine 2\nLine 3");
-
-//var_dump($AllData);
 curl_close($curl);
+/*
+//Отправка письма
+$to = $_POST["email"];
+$from = "ra@fitmepro.ru";
+$subject = "VPLAB excel info";
+$message = "VPLAB excel info.";
+
+$attachment = chunk_split(base64_encode(file_get_contents('vplab.xlsx')));
+$filename = 'vplab';
+$filetype = 'xlsx';
+
+$boundary = md5(date('r', time())); // рандомное число
+
+$headers = "From: " . $from . "\r\n";
+$headers .= "Reply-To: " . $from . "\r\n";
+$headers .= "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: multipart/mixed; boundary=\"_1_$boundary\"";
+
+$message="
+--_1_$boundary
+Content-Type: multipart/alternative; boundary=\"_2_$boundary\"
+
+--_2_$boundary
+Content-Type: text/plain; charset=\"utf-8\"
+Content-Transfer-Encoding: 7bit
+
+$message
+
+--_2_$boundary--
+--_1_$boundary
+Content-Type: \"$filetype\"; name=\"$filename\"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment // содержимое является вложенным
+
+$attachment
+--_1_$boundary--";
+
+mail($to, $subject, $message, $headers);*/
+echo '<a href="/index.html">Back</a>';
+
 ?>

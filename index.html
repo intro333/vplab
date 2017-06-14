@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Mail send
+        </title>
+        <style>
+            .mailer {
+                display: flex;
+                flex-direction: column;
+                border: 2px solid #777;
+                max-width: 180px;
+                padding: 30px;
+            }
+            .mailer-item {
+                margin: 10px;
+            }
+            .mailer-input {
+                border-radius: 3px;
+            }
+            .mailer-button {
+                cursor: pointer;
+                padding: 3px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                background: #f6f6f6;
+            }
+            .mailer-button:hover {
+                background-color: steelblue;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="post" action="parser.php">
+            <div class="mailer">
+                <div class="mailer-item">
+                    <label>
+                        E-mail
+                    </label>
+                    <input class="mailer-input" name="email" value="" required>
+                </div>
+                <div class="mailer-item">
+                    <label>
+                        Количество
+                    </label>
+                    <input class="mailer-input" name="counts" value="">
+                </div>
+                <div class="mailer-item">
+                    <button class="mailer-button">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
